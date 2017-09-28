@@ -418,7 +418,7 @@ namespace LayerCanopyPhotosynthesis
                 }
             }
         }
-
+        //---------------------------------------------------------------------------
         public void calcRatios(double ratio)
         {
             _ratios_ = new double[24];
@@ -430,8 +430,7 @@ namespace LayerCanopyPhotosynthesis
 
             calcRatios();
         }
-
-
+        //---------------------------------------------------------------------------
         public void calcRatios()
         {
             double[] times = new double[24];
@@ -443,7 +442,6 @@ namespace LayerCanopyPhotosynthesis
 
             ratios = new TableFunction(times, _ratios_);
         }
-
         //---------------------------------------------------------------------------
         public double getTemp(double time)
         {
@@ -529,7 +527,6 @@ namespace LayerCanopyPhotosynthesis
 
             calcSolarGeometry();
 
-            //_atmTransmissionRatio = _radn / ETRadiation;
             _atmTransmissionRatio = 0.75;
 
             Sg = _atmTransmissionRatio * So;
@@ -792,8 +789,6 @@ namespace LayerCanopyPhotosynthesis
         public TableFunction vpds { get; set; }
         //[System.Xml.Serialization.XmlIgnore]
         public TableFunction rhs { get; set; }
-
-
 
         public virtual void doUpdate() { }
         //------------------------------------------------------------------------------------------------

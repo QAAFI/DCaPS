@@ -46,7 +46,6 @@ namespace LayerCanopyPhotosynthesis
             }
         }
         //---------------------------------------------------------------------------------------------------------
-
         void calcAbsorbedRadiationDirect(EnvironmentModel EM, LeafCanopy canopy)
         {
             for (int i = 0; i < _nLayers; i++)
@@ -69,7 +68,6 @@ namespace LayerCanopyPhotosynthesis
             }
         }
         //---------------------------------------------------------------------------------------------------------
-
         public override void calcMaxRates(LeafCanopy canopy, SunlitShadedCanopy counterpart, PhotosynthesisModel PM)
         {
             calcRubiscoActivity25(canopy, counterpart, PM);
@@ -79,7 +77,6 @@ namespace LayerCanopyPhotosynthesis
 
         }
         //---------------------------------------------------------------------------------------------------------
-
         void calcAbsorbedRadiationScattered(EnvironmentModel EM, LeafCanopy canopy)
         {
             for (int i = 0; i < _nLayers; i++)
@@ -127,11 +124,6 @@ namespace LayerCanopyPhotosynthesis
         {
             for (int i = 0; i < _nLayers; i++)
             {
-                J2Max25[i] = canopy.LAI * canopy.CPath.psiJ2 * (canopy.leafNTopCanopy - canopy.CPath.structuralN) *
-                    ((i == 0 ? 1 : Math.Exp(-(canopy.beamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -
-                    Math.Exp(-(canopy.beamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i])) /
-                    (canopy.NAllocationCoeff + canopy.beamExtCoeffs[i] * canopy.LAI);
-
                 JMax25[i] = canopy.LAI * canopy.CPath.psiJ * (canopy.leafNTopCanopy - canopy.CPath.structuralN) *
                     ((i == 0 ? 1 : Math.Exp(-(canopy.beamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -
                     Math.Exp(-(canopy.beamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i])) /

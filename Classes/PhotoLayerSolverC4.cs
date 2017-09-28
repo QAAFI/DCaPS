@@ -9,42 +9,13 @@ namespace LayerCanopyPhotosynthesis
 {
     public class PhotoLayerSolverC4 : PhotoLayerSolver
     {
-        PhotosynthesisModel _PM;
-        int _layer;
-
+      
         //--------------------------------------------------------------
-        //public PhotoLayerSolverC4(int nPop, PhotosynthesisModel PM, int layer) :
         public PhotoLayerSolverC4(PhotosynthesisModel PM, int layer) :
             base(PM, layer)
-        //base(4, nPop)
-        //base(2, nPop) //Just 2 now shaded and sunlit A
         {
-            _PM = PM;
-            _layer = layer;
+           
         }
-        //--------------------------------------------------------------
-        //public void Setup(DEStrategy _strategy, double _scale, double _probability)
-        //{
-        //    double[] _min = new double[2];
-        //    double[] _max = new double[2];
-
-        //    //A
-        //    for (int i = 0; i < 2; i++)
-        //    {
-        //        _min[i] = 0;
-        //        _max[i] = 100;
-        //    }
-
-        //    base.Setup(_min, _max, _strategy, _scale, _probability);
-        //}
-
-        ////--------------------------------------------------------------
-        //public override double EnergyFunction(double[] testSolution, bool bAtSolution)
-        //{
-        //    return calcPhotosynthesis(_PM, _PM.sunlit, _layer, testSolution[0]) +
-        //        calcPhotosynthesis(_PM, _PM.shaded, _layer, testSolution[1]);
-
-        //}
         //--------------------------------------------------------------
         public override double calcPhotosynthesis(PhotosynthesisModel PM, SunlitShadedCanopy s, int layer, double _A)
         {
@@ -52,14 +23,9 @@ namespace LayerCanopyPhotosynthesis
 
             s.calcPhotosynthesis(PM, layer);
 
-            //This bit needs to be optimised
-            s.Rm[layer] = s.RdT[layer] * 0.5;
+           s.Rm[layer] = s.RdT[layer] * 0.5;
 
             canopy.z = (2 + canopy.fQ - canopy.CPath.fcyc) / (canopy.h * (1 - canopy.CPath.fcyc));
-
-            //canopy.g_ = 0.5 / s.ScO[layer];
-            //s.g_[layer] = 0.5 / s.ScO[layer];
-            //s.r_[layer] = s.g_[layer]
 
             s.gbs[layer] = canopy.gbs_CO2 * s.LAIS[layer];
 
@@ -106,8 +72,6 @@ namespace LayerCanopyPhotosynthesis
             s.Oc_ac[layer] = canopy.alpha * s.Ac[layer] / (0.047 * s.gbs[layer]) + s.Om[layer];
             s.Oc_aj[layer] = canopy.alpha * s.Aj[layer] / (0.047 * s.gbs[layer]) + s.Om[layer];
 
-            // s.Oc[layer] = canopy.alpha * s.A[layer] / (0.047 * s.gbs[layer]) + s.Om[layer];
-
             s.r_ac[layer] = s.g_[layer] * s.Oc_ac[layer];
             s.r_aj[layer] = s.g_[layer] * s.Oc_aj[layer];
 
@@ -146,13 +110,12 @@ namespace LayerCanopyPhotosynthesis
                 s.F[layer] = F_aj;
             }
 
-            // s.F[layer] = s.gbs[layer] * (s.Cc[layer] - s.Cm[layer]) / s.Vp[layer];
-
             s.CiCaRatio[layer] = s.Ci[layer] / canopy.Ca;
 
             //return Math.Pow(s.A[layer] - _A, 2);
             return 0;
         }
+        //--------------------------------------------------------------
 
         public double calcAj(LeafCanopy canopy, SunlitShadedCanopy s, int layer)
         {
@@ -190,23 +153,19 @@ namespace LayerCanopyPhotosynthesis
 
             return (-1 * Math.Pow((Math.Pow(a, 2) - 4 * b), 0.5) + c) / (2 * d); //Eq (A55)
         }
+        //--------------------------------------------------------------
 
         public override double calcAj(double Cc, LeafCanopy canopy, SunlitShadedCanopy s, int layer)
         {
-            // return ((1 - s.r_[layer] / Cc) * (1 - canopy.x) *
-            //     s.J[layer] * canopy.z / (3 * (1 + 7 * s.r_[layer] / (3 * Cc))) -
-            //     s.RdT[layer]);
-            if (Cc == 0)
+             if (Cc == 0)
             {
                 return 0;
             }
-            // return ((1 - s.r_[layer] / Cc) * (1 - canopy.x) *
-            //     s.J[layer] * canopy.z / (3 * (1 + 7 * s.r_[layer] / (3 * Cc))) -
-            //     s.RdT[layer]);
-            return ((1 - s.r_aj[layer] / Cc) * (1 - canopy.x) *
+             return ((1 - s.r_aj[layer] / Cc) * (1 - canopy.x) *
                s.J[layer] / (3 * (1 + 7 * s.r_[layer] / (3 * Cc))) -
                s.RdT[layer]);
         }
+        //--------------------------------------------------------------
 
 
         public double calcAc(LeafCanopy canopy, SunlitShadedCanopy s, int layer)
@@ -226,6 +185,8 @@ namespace LayerCanopyPhotosynthesis
 
             return Math.Min(Ac1, Ac2);
         }
+        //--------------------------------------------------------------
+
         public double calcAc(LeafCanopy canopy, SunlitShadedCanopy s, int layer, double cm_, bool assimilation, bool AC1)
         {
 
@@ -284,6 +245,7 @@ namespace LayerCanopyPhotosynthesis
             }
             return value;
         }
+        //--------------------------------------------------------------
 
         public override double calcAc(double Cc, LeafCanopy canopy, SunlitShadedCanopy s, int layer)
         {

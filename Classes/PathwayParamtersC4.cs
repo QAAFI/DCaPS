@@ -14,7 +14,7 @@ namespace LayerCanopyPhotosynthesis
 
             structuralN = 14;
             SLNRatioTop = 1.3;
-            SLNAv = 1.3;
+            SLNAv = 1.36;
 
             // Kc μbar	
             Kc_P25 = 1210;
@@ -58,45 +58,21 @@ namespace LayerCanopyPhotosynthesis
             gm_TOpt = 34.309;
             gm_Omega = 20.791;
 
-            _psiVc = 0.5;
-            _psiJ = 2.4;
-            _psiRd = 0;
-            _psiVp = 1.0;
+            psiVc = 0.35;
+            psiJ = 2.4;
+            psiRd = 0;
+            psiVp = 1.1;
 
-            _F2 = 0.75;
-            _F1 = 0.95;
+            x = 0.4;
 
-            _fcyc = 0.136;
-            _CiCaRatio = 0.4;
-            _CiCaRatioIntercept = 0.84;
-            _CiCaRatioSlope = -0.19;
-            // _J2_Ea = 77900;
-            // _J2_S = 630;
-            // _J2_D = 192000;
-            // _J_Ea = 77900;
-            // _J_S = 630;
-            // _J_D = 192000;
-            // _Vp_Ea = 94800;
-            // _Vp_S = 250;
-            // _Vp_D = 73300;
-            // _Vc_Ea = 78000;
-            // _Kc_25 = 1210;
-            // _Kc_Ea = 64200;
-            // _Ko_25 = 292000;
-            // _Ko_Ea = 10500;
-            // _Rd_Ea = 46390;
-            // _gm_CO2_25 = 0.3;
-            // _gm_CO2_Ea = 46900;
-            // _gm_CO2_S = 1400;
-            // _gm_CO2_D = 437400;
-            // _ScO_25 = 1310;
-            // _ScO_Ea = -31100;
-            // _R_25 = 8.314;
-            // _Kp_25 = 139;
-            // _Kp_Ea = 36300;
-            // _VoVc_25 = 0.184;
-            // _VoVc_Ea = -23000;
+            F2 = 0.75;
+            F1 = 0.95;
 
+            fcyc = 0.136;
+            CiCaRatio = 0.4;
+            CiCaRatioIntercept = 0.84;
+            CiCaRatioSlope = -0.19;
+            
         }
     }
 }

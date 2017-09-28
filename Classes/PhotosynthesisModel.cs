@@ -188,7 +188,7 @@ namespace LayerCanopyPhotosynthesis
         //[System.Xml.Serialization.XmlIgnore]
         public NitrogenModelNotifier nitrogenModelChanged;
 
-        private ElectronTransportModel _electronTransportModel = ElectronTransportModel.EXTENDED;
+        private ElectronTransportModel _electronTransportModel = ElectronTransportModel.EMPIRICAL;
         //[ModelPar("Ndx07", "Electron Transport Model", "", "")]
         public ElectronTransportModel electronTransportModel
         {
@@ -214,7 +214,7 @@ namespace LayerCanopyPhotosynthesis
         //[System.Xml.Serialization.XmlIgnore]
         public ElectronTransportModelNotifier electronTransportModelChanged;
 
-        private ConductanceModel _conductanceModel = ConductanceModel.DETAILED;
+        private ConductanceModel _conductanceModel = ConductanceModel.SIMPLE;
         //[ModelPar("pvSkJ", "Photosynthetic pathway", "P", "")]
         public ConductanceModel conductanceModel
         {
@@ -286,41 +286,13 @@ namespace LayerCanopyPhotosynthesis
                 Idirs.Add(envModel.directRadiationPAR);
                 Ios.Add(envModel.diffuseRadiationPAR + envModel.directRadiationPAR);
 
-
-                // if(sunlit.Ac.Sum() < sunlit.Aj.Sum())
-                // {
-                //     SunlitACs.Add(sunlit.Ac.Sum());
-                //     SunlitAJs.Add(0);
-                // }
-                // else
-                // {
-                //     SunlitACs.Add(0);
-                //     SunlitAJs.Add(sunlit.Aj.Sum());
-                // }
-
-                // if (shaded.Ac.Sum() < shaded.Aj.Sum())
-                // {
-                //     ShadedACs.Add(shaded.Ac.Sum());
-                //     ShadedAJs.Add(0);
-                // }
-                // else
-                // {
-                //     ShadedACs.Add(0);
-                //     ShadedAJs.Add(shaded.Aj.Sum());
-                // }
-
-
-
-
                 dailyBiomass += canopy.totalBiomassC;
 
                 double propIntRadn = canopy.propnInterceptedRadns.Sum();
-                //double propIntRadn = canopy.propnInterceptedRadns[0];
 
                 double interceptedRadnTimestep = envModel.totalIncidentRadiation * propIntRadn * timeStep * 3600;
                 interceptedRadn += interceptedRadnTimestep;
 
-                //double RUEtimeStep = canopy.totalBiomassC / interceptedRadnTimestep;
                 double RUEtimeStep = canopy.biomassC[0] / interceptedRadnTimestep;
 
                 PhotosynthesisModel PM = this;
@@ -362,7 +334,7 @@ namespace LayerCanopyPhotosynthesis
         {
             envModel = new EnvironmentModel();
             canopy = new LeafCanopy();
-            canopy.nLayers = 5;
+            canopy.nLayers = 1;
             sunlit = new SunlitCanopy();
             shaded = new ShadedCanopy();
 
@@ -385,7 +357,6 @@ namespace LayerCanopyPhotosynthesis
             {
                 run(true);
             }
-            //runDaily();
         }
         //---------------------------------------------------------------------------
         public void run(bool sendNotification)
@@ -406,9 +377,6 @@ namespace LayerCanopyPhotosynthesis
             //DESolver pls;
             PhotoLayerSolver pls = null;
 
-            //sunlit = new SunlitCanopy(canopy.nLayers);
-            //shaded = new ShadedCanopy(canopy.nLayers);
-
             sunlit.calcLAI(this.canopy, this.shaded);
             shaded.calcLAI(this.canopy, this.sunlit);
 
@@ -423,22 +391,15 @@ namespace LayerCanopyPhotosynthesis
                 if (_photoPathway == PhotoPathway.C3)
                 {
                     pls = new PhotoLayerSolverC3(this, i);
-                    //pls = new PhotoLayerSolverC3(100,this, i);
-                    //((PhotoLayerSolverC3)pls).Setup(DEOptimiser.DEStrategy.stRand1Exp, 0.65, 0.95);
                 }
                 else
                 {
                     pls = new PhotoLayerSolverC4(this, i);
-                    //pls = new PhotoLayerSolverC4(100, this, i);
-                    //((PhotoLayerSolverC4)pls).Setup(DEOptimiser.DEStrategy.stRand1Exp, 0.65, 0.95);
                 }
-                //pls.Solve(100);
                 ((PhotoLayerSolver)pls).calcPhotosynthesis(this, sunlit, i, 0);
                 ((PhotoLayerSolver)pls).calcPhotosynthesis(this, shaded, i, 0);
             }
-            //Just one layer at the moment
-            calcDailyAChartData(pls, canopy, sunlit, shaded);
-
+            
             canopy.calcCanopyBiomassAccumulation(this);
 
             if (sendNotification && notifyFinish != null)
@@ -447,47 +408,6 @@ namespace LayerCanopyPhotosynthesis
             }
         }
 
-        //--------------------------------------------------------------------------
-        public void calcDailyAChartData(PhotoLayerSolver pls, LeafCanopy canopy, SunlitShadedCanopy sunlit, SunlitShadedCanopy shaded)
-        {
-            SunlitACs = new List<double>();
-            SunlitAJs = new List<double>();
-            ShadedACs = new List<double>();
-            ShadedAJs = new List<double>();
-
-            //C3 incrementals
-            int start = 0;
-            int finish = 600;
-            int step = 5;
-
-            if (_photoPathway == PhotoPathway.C4)
-            {
-                start = 0;
-                finish = 12000;
-                step = 100;
-            }
-
-            // Layer 1 only
-
-            for (int i = start; i <= finish; i += step)
-            {
-                double sunlitAc = pls.calcAc(i, canopy, sunlit, 0);
-                double sunlitAj = pls.calcAj(i, canopy, sunlit, 0);
-                double shadedAc = pls.calcAc(i, canopy, shaded, 0);
-                double shadedAj = pls.calcAj(i, canopy, shaded, 0);
-
-                sunlitAc = double.IsNaN(sunlitAc) ? 0 : Math.Max(0, sunlitAc);
-                sunlitAj = double.IsNaN(sunlitAj) ? 0 : Math.Max(0, sunlitAj);
-                shadedAc = double.IsNaN(shadedAc) ? 0 : Math.Max(0, shadedAc);
-                shadedAj = double.IsNaN(shadedAj) ? 0 : Math.Max(0, shadedAj);
-
-                SunlitACs.Add(sunlitAc);
-                SunlitAJs.Add(sunlitAj);
-                ShadedACs.Add(shadedAc);
-                ShadedAJs.Add(shadedAj);
-            }
-
-        }
         //---------------------------------------------------------------------------
         public void runDaily(double timeStep)
         {

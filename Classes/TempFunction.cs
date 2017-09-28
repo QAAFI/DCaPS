@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LayerCanopyPhotosynthesis
 {
-    public class TempFunctionNormal
+    public class TempFunction
     {
-        public TempFunctionNormal() { }
+        public TempFunction() { }
 
         public static double val(double temp, double P25, double TOpt, double Omega)
         {

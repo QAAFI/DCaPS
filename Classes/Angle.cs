@@ -8,8 +8,8 @@ using System.Text;
 namespace LayerCanopyPhotosynthesis
 {
     public enum AngleType { Deg, Rad };
-    
-    public class Angle:INotifyPropertyChanged
+
+    public class Angle : INotifyPropertyChanged
     {
         private double _rad;
         private double _deg;
@@ -18,7 +18,7 @@ namespace LayerCanopyPhotosynthesis
         public Angle()
         {
         }
-       //------------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------
         public Angle(double val, AngleType type)
         {
             if (type == AngleType.Deg)
@@ -42,23 +42,23 @@ namespace LayerCanopyPhotosynthesis
         {
             return rads * 180.0 / Math.PI;
         }
-        
+
         //------------------------------------------------------------------------------------------------
         // Properties
         //------------------------------------------------------------------------------------------------
-         //Property changed event handler
+        //Property changed event handler
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         // Create the OnPropertyChanged method to raise the event 
         protected virtual void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
             {
-             handler(this, new PropertyChangedEventArgs(name));
+                handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
+        //------------------------------------------------------------------------------------------------
         public double rad
         {
             get { return _rad; }
@@ -70,7 +70,7 @@ namespace LayerCanopyPhotosynthesis
                 OnPropertyChanged("rad");
             }
         }
-
+        //------------------------------------------------------------------------------------------------
         public double deg
         {
             get { return _deg; }

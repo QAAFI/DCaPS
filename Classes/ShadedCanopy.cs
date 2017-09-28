@@ -59,9 +59,7 @@ namespace LayerCanopyPhotosynthesis
         {
             for (int i = 0; i < _nLayers; i++)
             {
-                J2Max25[i] = canopy.J2Max25[i] - sunlit.J2Max25[i];
                 JMax25[i] = canopy.JMax25[i] - sunlit.JMax25[i];
-
             }
         }
 
