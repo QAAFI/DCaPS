@@ -63,7 +63,7 @@ PM.envModel.minT = 7;
 
 * Step 4 - Set the leaf architecture and nitrogen status
 
-```sharp
+```csharp
 //Set the leaf angle
 PM.canopy.leafAngle = 60;
 
