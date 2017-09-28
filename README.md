@@ -84,7 +84,7 @@ PM.runDaily();
 
 ## Citation
 
-If you use this model or the website http://www.dcaps.net.au in your research, please cite the main research paper that this software supports:
+If you use this model or the website http://www.dcaps.net.au in your research, please cite the main research paper that this software supports, using the following citation:
 
 *`Full citation coming soon`* 
 
