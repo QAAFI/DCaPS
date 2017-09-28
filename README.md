@@ -82,6 +82,13 @@ PM.initialised = true;
 PM.runDaily();
 ```
 
+## Citation
+
+If you use this model or the website http://www.dcaps.net.au in your research, please cite the main research paper that this software supports:
+
+*`Full citation coming soon`* 
+
+
 ## Feedback
 
 https://github.com/QAAFI/DCaPS
