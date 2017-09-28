@@ -7,14 +7,15 @@ For a working web-based application of DCaPS, please visit http://www.dcaps.net.
 For model detail, please visit the documentation page on http://www.dcaps.net.au.
 
 
-## Model Description
+## Code Structure
 
-* There are several classes which are all owned by the PhotsynthesisModel class. Following is a list of the main sub model and a brief list of their functionality:
+There are several classes which are all owned by the PhotosynthesisModel class. Following is a list of the main sub model and a brief list of their functionality:
+
 * EnvironmentModel
      * Calculates solar geometry
      * Calculates diurnal radiation, temperature and VPD
 * LeafCanopy
-     * Calculuates diurnal sunlit / shaded LAI (Leaf Area Index)
+     * Calculates diurnal sunlit / shaded LAI (Leaf Area Index)
      * Calculates absorbed radiation
      * Calculates leaf nitrogen
 * SunlitCanopy / ShadedCanopy
@@ -24,7 +25,7 @@ For model detail, please visit the documentation page on http://www.dcaps.net.au
 
 ## Using the model
 
-The source code is a C# .Net project and can be used with several develepment UI's eg. Misrosoft Visual Studio.
+The source code is a C# .Net project and can be used with several development UI's eg. Microsoft Visual Studio.
 
 The code does not use any non standard libraries.
 
@@ -48,7 +49,7 @@ PM.photoPathway = PhotosynthesisModel.PhotoPathway.C3;
 * Step 3 - Set the location (latitude) and daily environmental parameters
 
 ```csharp
-//Set the latitiude
+//Set the latitude
 PM.envModel.latitude = new Angle(-27.5, AngleType.Deg);
 
 //Set Ambient air CO2 partial pressure
@@ -60,9 +61,9 @@ PM.envModel.maxT = 21;
 PM.envModel.minT = 7;
 ```
 
-* Step 4 - Set the leaf architecture and nitogen status
+* Step 4 - Set the leaf architecture and nitrogen status
 
-```csharp
+```sharp
 //Set the leaf angle
 PM.canopy.leafAngle = 60;
 
