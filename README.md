@@ -86,8 +86,8 @@ PM.runDaily();
 
 If you use this model or the website http://www.dcaps.net.au in your research, please cite the main research paper that this software supports, using the following citation:
 
-*`Full citation coming soon`* 
-
+*`Wu, A., Doherty, A., Wang, E., and Hammer, G.L. (2018) Simulating daily field crop canopy photosynthesis: an integrated software package. Functional Plant Biology, Functional Plant Biology, 45: 362-377.  https://doi.org/10.1071/FP17225
+`*
 
 ## Feedback
 
